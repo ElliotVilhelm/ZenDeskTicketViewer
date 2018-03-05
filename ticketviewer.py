@@ -6,39 +6,77 @@ creds = {
 
 
 def print_ticket_info(ticket):
-    print('*' * 40)
-    print("Ticket: ", int(n))
     print("Subject: ", ticket.subject)
     print("Description", ticket.description)
     print("ID: ", ticket.id)
     print("Created at: ", ticket.created_at)
     print("Type: ", ticket.type)
-    print('*' * 40)
+    print("Priority: ", ticket.priority)
+    print('-' * 40)
     print('\n')
+
+
+def print_ticket_info_short(ticket):
+    print("Subject: ", ticket.subject)
+    print("Description", ticket.description)
+    print("Priority: ", ticket.priority)
+    print('-' * 40)
+    print('\n')
+
+
+def get_tickets():
+    found_tickets = []
+    for t in zenpy_client.search(type='ticket'):
+        found_tickets.append(t)
+    return found_tickets
 
 
 if __name__ == "__main__":
     from zenpy import Zenpy
-    zenpy_client = Zenpy(**creds)
+    from zenpy.lib.exception import APIException
+    import sys
+
+    # Check for API Availibility
+    try:
+        zenpy_client = Zenpy(**creds)
+        tickets = get_tickets()
+    except APIException:
+        print("Error connecting to API")
+        sys.exit(1)
+
+
     run = True
     while run:
-        tickets = []
-        # Refresh Tickets
-        for ticket in zenpy_client.search(type='ticket'):
-            tickets.append(ticket)
-
-        print("\n(V)IEW_ALL (T)ICKET_NUMBER (E)ND")
-        choice = input("Enter Choice: ")
-        print(choice.upper())
-        if choice.upper() == "E":
-            run = False
+        # Diplsay Prompt
+        print("\n(V)IEW_ALL (T)ICKET_NUMBER (E)ND (F)ETCH")
+        # Get User Input
+        choice = input("Enter Choice: ").upper()
+        # Case show all tickets
         if choice.upper() == "V":
+            print("\nDisplaying All Tickets!\n")
             i = 1
-            for ticket in tickets:
-                print_ticket_info(ticket)
-        if choice.upper() == "T":
+            for t in tickets:
+                print('-' * 40)
+                print("Ticket: ", i)
+                print_ticket_info_short(t)
+                i += 1
+        # Case print a single ticket
+        elif choice.upper() == "T":
             n = int(input("Enter Ticket Number: "))
-            if int(n) > len(tickets):
+            if n > len(tickets):
                 print("Ticket Number Out of Range")
             else:
+                print("\n")
+                print('-' * 40)
+                print("Ticket: ", n)
                 print_ticket_info(tickets[n-1])
+        # Re-fetch tickets
+        elif choice.upper() == "F":
+            print("Requesting all tickets")
+            tickets = get_tickets()
+        # Case End program
+        elif choice.upper() == "E":
+            run = False
+            print("Ending Program")
+        else:
+            print("Invalid choice")
