@@ -1,3 +1,9 @@
+## Installation
+```
+cd ~/
+git clone https://github.com/ElliotVilhelm/ZenDeskTicketViewer.git
+cd ~/ZenDeskTicketViewer
+```
 ## Execution
 ```
 python3 ticketviewer.py
