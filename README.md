@@ -19,7 +19,7 @@ The programs prompt provides four options
 ### EXAMPLE NORMAL OUTPUT
 
 ```
-python3 ticketviewer.py < test1.py
+python3 ticketviewer.py < test1.txt
 ```
 <pre>
 (V)IEW_ALL (T)ICKET_NUMBER  (F)ETCH (E)ND
