@@ -11,8 +11,7 @@ an account, display them in a list, and view individual ticket details.
 * Zenpy
 
 
-=========================================
-========== EXAMPLE NORMAL OUTPUT ========
+### EXAMPLE NORMAL OUTPUT
 
 ```
 python3 ticketviewer.py < test1.py
@@ -74,14 +73,13 @@ Enter Choice: e
 Ending Program
 </pre>
 
-=========================================
-========== EXAMPLE ERROR OUTPUT =========
-### Invalid Credentials/API Unavailable
+### EXAMPLE ERROR OUTPUT
+#### Invalid Credentials/API Unavailable
 <pre>
 Error connecting to API
 </pre>
 
-### Invalid Choice
+#### Invalid Choice
 ```
 python3 ticketviewer.py < test2.txt
 ```
