@@ -1,3 +1,13 @@
+"""
+File Name: ticketviewer.py
+Author: Elliot V Pourmand
+Date: 03/05/2018
+Description: Simple Ticket Viewer with connects to the Zendesk API.
+             Viewer is able to request all tickets for an account,
+             display them in a list, and view individual ticket details.
+"""
+
+# User credentials
 creds = {
     'email': 'elliot@pourmand.com',
     'token': 'BwH2F6R2LT5VoPdqCaN6rxqqiCieec1yVZuZBZ0J',
@@ -6,6 +16,11 @@ creds = {
 
 
 def print_ticket_info(ticket):
+    """
+    Prints details information about the ticket param
+    :param ticket: Zenpy Ticket object
+    :return: void
+    """
     print("Subject: ", ticket.subject)
     print("Description", ticket.description)
     print("ID: ", ticket.id)
@@ -17,6 +32,11 @@ def print_ticket_info(ticket):
 
 
 def print_ticket_info_short(ticket):
+    """
+    Prints brief information about the ticket param
+    :param ticket: Zenpy Ticket object
+    :return: void
+    """
     print("Subject: ", ticket.subject)
     print("Description", ticket.description)
     print("Priority: ", ticket.priority)
@@ -25,6 +45,10 @@ def print_ticket_info_short(ticket):
 
 
 def get_tickets():
+    """
+    Fetches all tickets from user using ZenDesk API
+    :return: list of all tickets found
+    """
     found_tickets = []
     for t in zenpy_client.search(type='ticket'):
         found_tickets.append(t)
@@ -36,7 +60,7 @@ if __name__ == "__main__":
     from zenpy.lib.exception import APIException
     import sys
 
-    # Check for API Availibility
+    # Check for API Availability
     try:
         zenpy_client = Zenpy(**creds)
         tickets = get_tickets()
@@ -44,11 +68,10 @@ if __name__ == "__main__":
         print("Error connecting to API")
         sys.exit(1)
 
-
     run = True
     while run:
         # Diplsay Prompt
-        print("\n(V)IEW_ALL (T)ICKET_NUMBER (E)ND (F)ETCH")
+        print("\n(V)IEW_ALL (T)ICKET_NUMBER (F)ETCH (E)ND")
         # Get User Input
         choice = input("Enter Choice: ").upper()
         # Case show all tickets
