@@ -11,7 +11,7 @@ import sys
 from zenpy.lib.api_objects import Ticket
 
 
-def test_get_tickets():
+def test_get_tickets_return_val():
     """
     Test get_tickets() using pytest framework
     :return: void
@@ -24,8 +24,20 @@ def test_get_tickets():
         sys.exit(1)
     # Verify list was returned
     assert len(tickets) >= 0
-    # Verify object type of Ticket
+
+
+def test_get_tickets_type():
+    """
+    Test get_tickets() using pytest framework
+    :return: void
+    """
+    try:
+        zenpy_client = Zenpy(**creds)
+        tickets = get_tickets(zenpy_client)
+    except APIException:
+        print("Error connecting to API")
+        sys.exit(1)
+    # Verify type
     if len(tickets) > 0:
         assert isinstance(tickets[0], Ticket)
-
 
